@@ -15,7 +15,7 @@ This is the No Admins, No Masters edition of Keycloak.
 
 ## Getting Started
 
-### From a system adminstrator perspective
+### From a system administrator perspective
 
 A note on permissions: we use the `admin-cli` client and a fine grained, secure
 access configuration for making requests from this app to your Keycloak
