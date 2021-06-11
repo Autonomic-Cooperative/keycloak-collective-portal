@@ -11,7 +11,8 @@ from starlette.middleware.sessions import SessionMiddleware
 APP_SECRET_KEY = environ.get("APP_SECRET_KEY")
 KEYCLOAK_CLIENT_ID = environ.get("KEYCLOAK_CLIENT_ID")
 KEYCLOAK_CLIENT_SECRET = environ.get("KEYCLOAK_CLIENT_SECRET")
-KEYCLOAK_METADATA_URL = environ.get("KEYCLOAK_DOMAIN")
+KEYCLOAK_DOMAIN = environ.get("KEYCLOAK_DOMAIN")
+KEYCLOAK_REALM = environ.get("KEYCLOAK_REALM")
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key=APP_SECRET_KEY)
@@ -23,7 +24,8 @@ oauth.register(
     client_kwargs={"scope": "openid profile email"},
     client_id=KEYCLOAK_CLIENT_ID,
     client_secret=KEYCLOAK_CLIENT_SECRET,
-    server_metadata_url=KEYCLOAK_METADATA_URL,
+    authorize_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_DOMAIN}/protocol/openid-connect/auth",
+    access_token_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_DOMAIN}/protocol/openid-connect/token",
 )
 
 
