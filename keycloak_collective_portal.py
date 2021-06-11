@@ -41,12 +41,12 @@ async def home(request: Request):
 
 @app.get("/login/keycloak")
 async def login_keycloak(request: Request):
-    redirect_uri = request.url_for("auth")
+    redirect_uri = request.url_for("auth_keycloak")
     return await oauth.keycloak.authorize_redirect(request, redirect_uri)
 
 
 @app.get("/auth/keycloak")
-async def auth(request: Request):
+async def auth_keycloak(request: Request):
     try:
         token = await oauth.keycloak.authorize_access_token(request)
         user = await oauth.keycloak.parse_id_token(request, token)
