@@ -1,0 +1,19 @@
+---
+kind: pipeline
+name: publish pipeline
+steps:
+  - name: publish container
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_reg_username
+      password:
+        from_secret: docker_reg_passwd
+      repo: decentral1se/keycloak-collective-portal
+      auto_tag: true
+trigger:
+  branch:
+    - main
+  event:
+    exclude:
+      - pull_request

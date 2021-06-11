@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "keycloak-collective-portal"
+version = "0.1.0"
+description = "Community Keycloak SSO user management."
+authors = ["decentral1se <hi@decentral1.se>"]
+license = "AGPLv3"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.65.2"
+uvicorn = {extras = ["standard"], version = "^0.14.0"}
+Jinja2 = "^3.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^21.6b0"
+flake8 = "^3.9.2"
+isort = "^5.8.0"
+mypy = "^0.902"
+
+[tool.black]
+line-length = 80
+target-version = ["py39"]
+include = '\.pyi?$'
+
+[tool.isort]
+include_trailing_comma = true
+known_first_party = "keycloak_collective_portal"
+known_third_party = "pytest"
+line_length = 80
+multi_line_output = 3
+skip = ".tox"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
