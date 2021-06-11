@@ -23,7 +23,7 @@ oauth.register(
     client_kwargs={"scope": "openid profile email"},
     client_id=KEYCLOAK_CLIENT_ID,
     client_secret=KEYCLOAK_CLIENT_SECRET,
-    server_metadata_url=f"https://{environ.get('KEYCLOAK_DOMAIN')}/.well-known/openid-configuration",  # noqa
+    server_metadata_url=KEYCLOAK_DOMAIN,
 )
 
 
