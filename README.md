@@ -45,5 +45,6 @@ your technology stack.
 It's a [FastAPI](https://fastapi.tiangolo.com/) application.
 
 ```
+$ set -a && source .envrc && set +a
 $ make
 ```
