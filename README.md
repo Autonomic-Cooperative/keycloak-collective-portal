@@ -45,7 +45,5 @@ your technology stack.
 It's a [FastAPI](https://fastapi.tiangolo.com/) application.
 
 ```
-$ python3 -m venv .venv && source .venv/bin/activate
-$ pip install -e .
 $ make
 ```
