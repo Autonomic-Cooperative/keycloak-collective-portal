@@ -1,5 +1,7 @@
 # keycloak-collective-portal
 
+[![Build Status](https://drone.autonomic.zone/api/badges/autonomic-cooperative/keycloak-collective-portal/status.svg?ref=refs/heads/main)](https://drone.autonomic.zone/autonomic-cooperative/keycloak-collective-portal)
+
 > Community Keycloak SSO user management
 
 This is a tiny Python app that allows you create custom web pages, outside of
