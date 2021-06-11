@@ -2,11 +2,11 @@
 
 from os import environ
 
+import httpx
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from httpx import get
 from starlette.middleware.sessions import SessionMiddleware
 
 APP_SECRET_KEY = environ.get("APP_SECRET_KEY")
@@ -69,6 +69,6 @@ async def auth_keycloak(request: Request):
 
 @app.route("/logout")
 async def logout(request: Request):
+    httpx.get(f"{BASE_URL}/logout")
     request.session.pop("user", None)
-    get(f"{BASE_URL}/logout")
     return RedirectResponse(request.url_for("login"))
