@@ -48,7 +48,7 @@ async def login_keycloak(request: Request):
 @app.get("/auth")
 async def auth(request: Request):
     try:
-        token = await oauth.keycloak.authorize_access_token(request)
+        token = await oauth.keycloak.authorize_access_token()
     except OAuthError as error:
         return HTMLResponse(f"<h1>{error.error}</h1>")
     user = await oauth.keycloak.parse_id_token(request, token)
