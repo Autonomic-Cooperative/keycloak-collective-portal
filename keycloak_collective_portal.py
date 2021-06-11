@@ -24,8 +24,8 @@ oauth.register(
     client_kwargs={"scope": "openid profile email"},
     client_id=KEYCLOAK_CLIENT_ID,
     client_secret=KEYCLOAK_CLIENT_SECRET,
-    authorize_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_DOMAIN}/protocol/openid-connect/auth",
-    access_token_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_DOMAIN}/protocol/openid-connect/token",
+    authorize_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/auth",
+    access_token_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token",
 )
 
 
