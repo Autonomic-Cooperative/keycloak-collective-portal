@@ -30,6 +30,13 @@ oauth.register(
 )
 
 
+def _url_for(request, uri):
+    _uri = request.url_for(uri)
+    if "X-Forwarded-Proto" in request.headers:
+        return _uri.replace("http:", request.headers["X-Forwarded-Proto"] + ":")
+    return _uri
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     user = request.session.get("user")
@@ -37,12 +44,12 @@ async def home(request: Request):
         return templates.TemplateResponse(
             "index.html", context={"request": request, "user": user}
         )
-    return RedirectResponse(request.url_for("login_keycloak"))
+    return RedirectResponse(_url_for(request, "login_keycloak"))
 
 
 @app.get("/login/keycloak")
 async def login_keycloak(request: Request):
-    redirect_uri = request.url_for("auth_keycloak")
+    redirect_uri = _url_for(request, "auth_keycloak")
     return await oauth.keycloak.authorize_redirect(request, redirect_uri)
 
 
@@ -52,7 +59,7 @@ async def auth_keycloak(request: Request):
         token = await oauth.keycloak.authorize_access_token(request)
         user = await oauth.keycloak.parse_id_token(request, token)
         request.session["user"] = dict(user)
-        return RedirectResponse(request.url_for("home"))
+        return RedirectResponse(_url_for(request, "home"))
     except Exception as exception:
         return HTMLResponse(f"<h1>{str(exception)}</h1>")
 
@@ -60,4 +67,4 @@ async def auth_keycloak(request: Request):
 @app.route("/logout")
 async def logout(request: Request):
     request.session.pop("user", None)
-    return RedirectResponse(request.url_for("home"))
+    return RedirectResponse(_url_for(request, "home"))
