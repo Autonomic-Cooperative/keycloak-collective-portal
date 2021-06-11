@@ -36,7 +36,7 @@ your technology stack.
 
 ### From a collective member perspective
 
-- Visit https://<your-portal-url> (ask your system adminstrator friends)
+- Visit `https://<your-portal-url>` (ask your system adminstrator friends)
 - Log in with your usual login details
 - Follow the instructions on the web page to perform administrative actions
 
