@@ -6,6 +6,7 @@ from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from httpx import get
 from starlette.middleware.sessions import SessionMiddleware
 
 APP_SECRET_KEY = environ.get("APP_SECRET_KEY")
@@ -18,15 +19,17 @@ app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key=APP_SECRET_KEY)
 templates = Jinja2Templates(directory="templates")
 
+BASE_URL = f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect"
+
 oauth = OAuth()
 oauth.register(
     name="keycloak",
     client_kwargs={"scope": "openid profile email"},
     client_id=KEYCLOAK_CLIENT_ID,
     client_secret=KEYCLOAK_CLIENT_SECRET,
-    authorize_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/auth",
-    access_token_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token",
-    jwks_uri=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/certs",
+    authorize_url=f"{BASE_URL}/auth",
+    access_token_url=f"{BASE_URL}/token",
+    jwks_uri=f"{BASE_URL}/certs",
 )
 
 
@@ -35,9 +38,16 @@ async def home(request: Request):
     user = request.session.get("user")
     if user:
         return templates.TemplateResponse(
-            "index.html", context={"request": request, "user": user}
+            "admin.html", context={"request": request, "user": user}
         )
-    return RedirectResponse(request.url_for("login_keycloak"))
+    return RedirectResponse(request.url_for("login"))
+
+
+@app.get("/login", response_class=HTMLResponse)
+async def login(request: Request):
+    return templates.TemplateResponse(
+        "login.html", context={"request": request}
+    )
 
 
 @app.get("/login/keycloak")
@@ -60,4 +70,5 @@ async def auth_keycloak(request: Request):
 @app.route("/logout")
 async def logout(request: Request):
     request.session.pop("user", None)
-    return RedirectResponse(request.url_for("home"))
+    get(f"{BASE_URL}/logout")
+    return RedirectResponse(request.url_for("login"))

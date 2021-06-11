@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <p>
+      Hello, {{ user.preferred_username }}
+      <small>(<a href="{{ url_for('logout') }}">logout</a>)</small>
+    </p>
+  </body>
+</html>
