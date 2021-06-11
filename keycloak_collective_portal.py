@@ -26,6 +26,7 @@ oauth.register(
     client_secret=KEYCLOAK_CLIENT_SECRET,
     authorize_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/auth",
     access_token_url=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token",
+    jwks_uri=f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/openid-connect/certs",
 )
 
 
