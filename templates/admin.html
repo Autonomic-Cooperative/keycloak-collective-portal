@@ -17,7 +17,7 @@
         <tr>
           <td> <a class="invite" href="{{ url_for('home') }}{{ invite.link }}">{{ url_for('home') }}{{ invite.link }}</a> </td>
           <td> {{ invite.human_time }} </td>
-          <td> <a href="#">copy</a> <a href="{{ url_for('invite_keycloak_delete') }}?invite={{ invite.link }}">delete</a> </td>
+          <td> <a href="{{ url_for('invite_keycloak_delete') }}?invite={{ invite.link }}">delete</a> </td>
         </tr>
       {% endfor %}
       </table>
