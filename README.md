@@ -2,7 +2,7 @@
 
 > **WARNING**: this software is in a pre-alpha quality state and is an initial
 > prototype. It is being developed within the context of
-> [lumbung.space](https://lumbung.space/) and maybe have hard-coded values and
+> [lumbung.space](https://lumbung.space/) and may have hard-coded values and
 > configuration specifically for that environment. If the idea of this software
 > sounds interesting to you, please let us know on the issue tracker!
 
