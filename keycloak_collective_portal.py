@@ -1,6 +1,8 @@
 """Community Keycloak SSO user management."""
 
 import json
+from datetime import datetime as dt
+from datetime import timedelta
 from os import environ
 from uuid import uuid4
 
@@ -10,6 +12,7 @@ from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from humanize import naturaldelta
 from starlette.exceptions import HTTPException
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -25,6 +28,8 @@ BASE_URL = f"https://{KEYCLOAK_DOMAIN}/auth/realms/{KEYCLOAK_REALM}/protocol/ope
 REDIS_DB = environ.get("REDIS_DB")
 REDIS_HOST = environ.get("REDIS_HOST")
 REDIS_PORT = environ.get("REDIS_PORT")
+
+INVITE_TIME_LIMIT = environ.get("INVITE_TIME_LIMIT")
 
 app = FastAPI(docs_url=None, redoc_url=None)
 app.add_middleware(SessionMiddleware, secret_key=APP_SECRET_KEY)
@@ -68,9 +73,24 @@ async def get_user(request: Request):
     return request.session.get("user")
 
 
+async def get_invites(request: Request, user=Depends(get_user)):
+    username = user["preferred_username"]
+    invites = await app.state.redis.get(username)
+    if invites:
+        humanised = []
+        for invite in json.loads(invites):
+            invite["human_time"] = naturaldelta(
+                dt.fromisoformat(invite["time"])
+                + timedelta(days=int(INVITE_TIME_LIMIT))
+            )
+            humanised.append(invite)
+        return humanised
+    return []
+
+
 @app.on_event("startup")
 async def starup_event():
-    app.state.redis = create_redis_pool(
+    app.state.redis = await create_redis_pool(
         f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}?encoding=utf-8"
     )
 
@@ -82,8 +102,10 @@ async def shutdown_event():
 
 
 @app.get("/", dependencies=[Depends(logged_in)])
-async def home(request: Request, user=Depends(get_user)):
-    context = {"request": request, "user": user}
+async def home(
+    request: Request, user=Depends(get_user), invites=Depends(get_invites)
+):
+    context = {"request": request, "user": user, "invites": invites}
     return templates.TemplateResponse("admin.html", context=context)
 
 
@@ -125,6 +147,18 @@ async def logout(request: Request):
     return RedirectResponse(request.url_for("login"))
 
 
-@app.get("/invite/keycloak", dependencies=[Depends(logged_in)])
-async def invite_keycloak(request: Request):
-    pass
+@app.get("/invite/keycloak/create", dependencies=[Depends(logged_in)])
+async def invite_keycloak_create(
+    request: Request, user=Depends(get_user), invites=Depends(get_invites)
+):
+    invites.append({"link": str(uuid4()), "time": str(dt.now())})
+    app.state.redis.set(user["preferred_username"], json.dumps(invites))
+    return RedirectResponse(request.url_for("home"))
+
+
+@app.get("/invite/keycloak/delete", dependencies=[Depends(logged_in)])
+async def invite_keycloak_delete(
+    request: Request, user=Depends(get_user), invites=Depends(get_invites)
+):
+    invite =request.query_params.get("invite")
+    # TODO

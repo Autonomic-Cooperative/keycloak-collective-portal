@@ -7,8 +7,22 @@
       Hello, {{ user.preferred_username }}
       <small>(<a href="{{ url_for('logout') }}">logout</a>)</small>
     </p>
+    <table>
+      <tr>
+        <th>Link</th>
+        <th>Validity </th>
+        <th>Operations</th>
+      </tr>
+      {% for invite in invites %}
+        <tr>
+          <td> <a class="invite" href="{{ url_for('home') }}{{ invite.link }}">{{ url_for('home') }}{{ invite.link }}</a> </td>
+          <td> {{ invite.human_time }} </td>
+          <td> <a href="#">copy</a> <a href="{{ url_for('invite_keycloak_delete') }}?invite={{ invite.link }}">delete</a> </td>
+        </tr>
+      {% endfor %}
+      </table>
     <p>
-      <a href="{{ url_for('invite_keycloak') }}">Generate an invite link</a>
+      <a href="{{ url_for('invite_keycloak_create') }}">Generate an invite link</a>
     </p>
   </body>
 </html>
