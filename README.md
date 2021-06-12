@@ -16,8 +16,9 @@ Keycloak. This is done via the REST API. It was designed with collective
 management in mind. Existing Keycloak users can authenticate with the app and
 then do things like invite others, send verification emails and so on. Anything
 that the REST API supports, this app can support. We aim to strive for the
-maximum usability which is often lacking in Enterprise Software ™ environments.
-This is the No Admins, No Masters edition of Keycloak.
+usability which is often lacking in Enterprise Software ™ environments
+(Keycloak is made within the context of RedHat / IBM). This is the No Admins,
+No Masters edition of Keycloak.
 
 ## Getting Started
 
