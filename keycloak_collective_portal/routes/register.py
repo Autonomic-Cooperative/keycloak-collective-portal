@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from fastapi import APIRouter, Depends, Form, Request
 
-from keycloak_collective_portal.dependencies import get_invites
+from keycloak_collective_portal.dependencies import fresh_token, get_invites
 
 router = APIRouter()
 
@@ -50,7 +50,7 @@ async def register_invite(
     )
 
 
-@router.post("/form/keycloak/register")
+@router.post("/form/keycloak/register", dependencies=[Depends(fresh_token)])
 def form_keycloak_register(
     request: Request,
     first_name: str = Form(...),

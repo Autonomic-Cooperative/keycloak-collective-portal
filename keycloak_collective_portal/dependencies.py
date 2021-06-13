@@ -7,6 +7,13 @@ from fastapi import Depends, Request
 from humanize import naturaldelta
 
 
+async def fresh_token(request: Request):
+    """Ensure fresh credentials for speaking to Keycloak."""
+    from keycloak_collective_portal.keycloak import init_keycloak
+
+    request.app.state.keycloak = init_keycloak()
+
+
 async def logged_in(request: Request):
     """Ensure the user is logged in."""
     from keycloak_collective_portal.exceptions import RequiresLoginException
