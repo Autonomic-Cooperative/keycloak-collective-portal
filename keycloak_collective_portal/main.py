@@ -1,5 +1,7 @@
 """App entrypoint."""
 
+import logging
+
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -8,6 +10,7 @@ from starlette.exceptions import HTTPException
 from starlette.middleware.sessions import SessionMiddleware
 
 from keycloak_collective_portal.config import (
+    APP_LOG_LEVEL,
     APP_SECRET_KEY,
     APP_THEME,
     REDIS_DB,
@@ -27,6 +30,9 @@ from keycloak_collective_portal.routes import (
     register,
     root,
 )
+
+log = logging.getLogger("uvicorn")
+log.setLevel(APP_LOG_LEVEL)
 
 app = FastAPI(docs_url=None, redoc_url=None)
 
@@ -60,9 +66,14 @@ app.add_middleware(SessionMiddleware, secret_key=APP_SECRET_KEY)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 app.state.oidc = init_oidc()
+log.info("Initialised OpenID Connect client (for Keycloak logins)")
+
 app.state.keycloak = init_keycloak()
+log.info("Initialised Keycloak admin client (for Keycloak REST API)")
+
 app.state.templates = Jinja2Templates(directory=TEMPLATE_DIR)
 app.state.theme = APP_THEME
+app.state.log = log
 
 app.include_router(invite.router)
 app.include_router(oidc.router)

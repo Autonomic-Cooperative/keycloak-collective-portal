@@ -1,6 +1,6 @@
 """Application configuraiton."""
 
-from datetime import timedelta
+import logging
 from os import environ
 from pathlib import Path
 
@@ -29,3 +29,12 @@ TEMPLATE_DIR = Path(".").absolute() / "keycloak_collective_portal" / "templates"
 
 # Theme selection
 APP_THEME = environ.get("APP_THEME", "default")
+
+# Log level
+LOG_LEVEL = environ.get("APP_LOG_LEVEL", "info")
+if LOG_LEVEL == "info":
+    APP_LOG_LEVEL = logging.INFO
+elif LOG_LEVEL == "debug":
+    APP_LOG_LEVEL = logging.DEBUG
+else:
+    APP_LOG_LEVEL = logging.INFO

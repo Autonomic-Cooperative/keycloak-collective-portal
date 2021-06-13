@@ -22,6 +22,7 @@ async def invite_keycloak_create(
     username = user["preferred_username"]
 
     new_invite = {"link": str(uuid4()), "time": str(dt.now())}
+    request.app.state.log.info(f"Generated new invite: {new_invite}")
 
     invites = await request.app.state.redis.get(username)
     if invites:
@@ -39,10 +40,13 @@ async def invite_keycloak_delete(
     request: Request, user=Depends(get_user), invites=Depends(get_invites)
 ):
     username = user["preferred_username"]
-
     invite_to_delete = request.query_params.get("invite")
+
     invites = await request.app.state.redis.get(username)
+    request.app.state.log.info(f"Retrieved invites: {invites}")
+
     purged = [i for i in invites if i["link"] != invite_to_delete]
+    request.app.state.log.info(f"Purged invites: {invites}")
 
     await request.app.state.redis.set(user["preferred_username"], purged)
 

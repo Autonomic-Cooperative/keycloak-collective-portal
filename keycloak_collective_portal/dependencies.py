@@ -12,8 +12,10 @@ async def logged_in(request: Request):
     from keycloak_collective_portal.exceptions import RequiresLoginException
 
     user = request.session.get("user")
+
     if not user:
         raise RequiresLoginException
+
     return user
 
 

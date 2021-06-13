@@ -82,6 +82,9 @@ def form_keycloak_register(
         )
         request.app.state.keycloak.send_verify_email(user_id=user_id)
     except Exception as exception:
+        request.app.state.log.error(
+            f"Keycloak user registration failed, saw: {exception}"
+        )
         message = json.loads(exception.error_message).get(
             "errorMessage", "Unknown reason!"
         )
