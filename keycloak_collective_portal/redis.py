@@ -30,7 +30,9 @@ class Redis:
     async def get(self, key, loads=True):
         """Get a specific key."""
         if loads:
-            return json.loads(await self._redis.get(key))
+            value = await self._redis.get(key)
+            if value:
+                return json.loads(value)
         return await self._redis.get(key)
 
     async def close(self):
