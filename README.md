@@ -20,6 +20,17 @@ usability which is often lacking in Enterprise Software ™ environments
 (Keycloak is made within the context of RedHat / IBM). This is the No Admins,
 No Masters edition of Keycloak.
 
+## Feature set
+
+- **invite links**:
+  - Any collective member with an existing Keycloak account can log in and generate them
+  - They are valid for 30 days by default (configurable via `INVITE_TIME_LIMIT`)
+  - Anyone with an invite link can create an account on the Keycloak, so don't share publicly!
+  - There is no access granularity on the account creation implemented yet, so the accounts are "global"
+  - Once the user fills in their name, email, password they will receive an email verification mail
+
+If you want a feature implemented, please open an issue to discuss.
+
 ## Getting Started
 
 ### From a system administrator perspective
