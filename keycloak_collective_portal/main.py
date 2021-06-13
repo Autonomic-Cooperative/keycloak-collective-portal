@@ -52,7 +52,7 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    app.state.redis.close()
+    await app.state.redis.close()
 
 
 app.add_middleware(SessionMiddleware, secret_key=APP_SECRET_KEY)
