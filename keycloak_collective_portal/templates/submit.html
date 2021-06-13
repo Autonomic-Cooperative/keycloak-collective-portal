@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if email %}
+  <p>Thank you! You will receive a welcome mail to {{ email }} shortly.</p>
+  <p>Don't forget to check your Spam folder, in case the email ends up there.</p>
+  {% elif exception %}
+  <p>Woops, something went wrong: {{ exception }}.</p>
+  <p>Please contact your system adminstrator if this is unexpected.</p>
+  {% endif %}
+{% endblock %}

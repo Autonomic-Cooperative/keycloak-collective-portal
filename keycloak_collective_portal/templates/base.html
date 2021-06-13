@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if request.app.state.theme == "default" %}
+      <link href="{{ url_for('static', path='/default.css') }}" rel="stylesheet">
+    {% elif request.app.state.theme == "lumbung" %}
+      <link href="{{ url_for('static', path='/lumbung.css') }}" rel="stylesheet">
+    {% endif %}
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>

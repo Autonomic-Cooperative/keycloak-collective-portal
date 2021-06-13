@@ -40,6 +40,7 @@ your technology stack.
   - **Service Account Roles tab**:
       - **Client roles**: Under `realm-management` add `manage-users` and `view-users`
 - Deploy using [`coop-cloud/keycloak-colective-portal`](https://git.autonomic.zone/coop-cloud/keycloak-collective-portal)
+  - See the example [.envrc](./.envrc) for the configuration available, more documentation will follow soon.
 
 ### From a collective member perspective
 
@@ -49,9 +50,11 @@ your technology stack.
 
 ## Hacking
 
-It's a [FastAPI](https://fastapi.tiangolo.com/) application. Currently being
-developed with Python 3.9. Once we move out of the prototype stage, more
-version compatability will be offered.
+It's a [FastAPI](https://fastapi.tiangolo.com/) application (if you know
+[Flask](https://flask.palletsprojects.com/en/2.0.x/) /
+[Sanic](https://sanic.readthedocs.io/en/stable/) then it is more or less the
+same thing). Currently being developed with Python 3.9. Once we move out of the
+prototype stage, more version compatability will be offered.
 
 ```
 $ docker run -p 6379:6379 -d redis:6-alpine

@@ -15,5 +15,7 @@ RUN pip install --no-cache-dir --disable-pip-version-check --no-index --no-deps 
 COPY . /srv/project
 WORKDIR /srv/project
 
-CMD ["uvicorn", "--forwarded-allow-ips='*'", "--proxy-headers", "--host", "0.0.0.0", "keycloak_collective_portal:app"]
+RUN apt update && apt install -yq curl
+
+CMD ["uvicorn", "--forwarded-allow-ips='*'", "--proxy-headers", "--host", "0.0.0.0", "keycloak_collective_portal.main:app"]
 EXPOSE 8000
