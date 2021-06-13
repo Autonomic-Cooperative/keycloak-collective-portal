@@ -10,8 +10,8 @@
 
 > Community Keycloak SSO user management
 
-This is a tiny Python app that allows you create custom web pages, outside of
-the Keycloak administration interface, which can be used to manage users in
+This is a small Python app that allows you to create custom web pages, outside
+of the Keycloak administration interface, which can be used to manage users in
 Keycloak. This is done via the REST API. It was designed with collective
 management in mind. Existing Keycloak users can authenticate with the app and
 then do things like invite others, send verification emails and so on. Anything
