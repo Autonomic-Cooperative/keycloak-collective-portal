@@ -40,7 +40,7 @@ your technology stack.
   - **Service Account Roles tab**:
       - **Client roles**: Under `realm-management` add `manage-users` and `view-users`
 - Deploy using [`coop-cloud/keycloak-colective-portal`](https://git.autonomic.zone/coop-cloud/keycloak-collective-portal)
-  - See the example [.envrc](./.envrc) for the configuration available, more documentation will follow soon.
+  - See the example [.envrc](.env.sample) for the configuration available, more documentation will follow soon.
 
 ### From a collective member perspective
 
