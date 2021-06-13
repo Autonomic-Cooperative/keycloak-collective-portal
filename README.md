@@ -65,10 +65,13 @@ It's a [FastAPI](https://fastapi.tiangolo.com/) application (if you know
 [Flask](https://flask.palletsprojects.com/en/2.0.x/) /
 [Sanic](https://sanic.readthedocs.io/en/stable/) then it is more or less the
 same thing). Currently being developed with Python 3.9. Once we move out of the
-prototype stage, more version compatability will be offered.
+prototype stage, more version compatability will be offered. You'll need a
+working Keycloak install as well to fill in correct `.env` values. A more
+covenient development environment will come along shortly too.
 
 ```
 $ docker run -p 6379:6379 -d redis:6-alpine
-$ set -a && source .envrc && set +a
+$ cp .env.sample .env  # fill with real values
+$ set -a && source .env && set +a
 $ make
 ```
