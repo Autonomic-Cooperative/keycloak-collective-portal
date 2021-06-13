@@ -43,7 +43,7 @@ async def http_exception_handler(request, exc):
 
 
 @app.on_event("startup")
-async def starup_event():
+async def startup_event():
     redis = Redis()
     app.state.redis = await redis.create_pool(
         f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}?encoding=utf-8"
