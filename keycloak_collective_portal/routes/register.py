@@ -86,7 +86,7 @@ def form_keycloak_register(
             f"Keycloak user registration failed, saw: {exception}"
         )
         message = json.loads(exception.error_message).get(
-            "errorMessage", "Unknown reason!"
+            "errorMessage", "Unknown reason"
         )
         context = {"request": request, "exception": message}
         return request.app.state.templates.TemplateResponse(
