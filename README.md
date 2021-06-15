@@ -22,7 +22,7 @@ No Masters edition of Keycloak.
 
 ## Feature set
 
-- **invite links**:
+- **invite links** ([demo video](https://matrix.autonomic.zone/_matrix/media/r0/download/autonomic.zone/HRQwVkAwGdxIwaqFhUttbckB)):
   - Any collective member with an existing Keycloak account can log in and generate them
   - They are valid for 30 days by default (configurable via `INVITE_TIME_LIMIT`)
   - Anyone with an invite link can create an account on the Keycloak, so don't share publicly!
