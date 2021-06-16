@@ -5,7 +5,7 @@ run:
 	@if [ ! -d ".venv" ]; then \
 		python3 -m venv .venv && \
 		.venv/bin/pip install -U pip setuptools wheel poetry && \
-		.venv/bin/poetry install --dev; \
+		.venv/bin/poetry install; \
 	fi
 	.venv/bin/poetry run uvicorn keycloak_collective_portal.main:app --reload
 
