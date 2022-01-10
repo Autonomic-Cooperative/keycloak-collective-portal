@@ -11,3 +11,19 @@ th, td {
 table, th, td {
   border: 1px solid black;
 }
+
+input {
+  border: 2px solid currentcolor;
+}
+
+input:invalid {
+  border: 2px dashed red;
+}
+
+input:invalid:focus {
+  background-image: linear-gradient(magenta, pink);
+}
+
+.error {
+  color: red;
+}

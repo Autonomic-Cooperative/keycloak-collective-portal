@@ -5,27 +5,27 @@
   </p>
 
   {% if exception %}
-  <p>Oops, something went wrong: {{ exception }} 😬</p>
+  <p class="error">Oops, something went wrong: {{ exception }} 😬</p>
   {% endif %}
 
   <form method="post" action="{{ url_for('form_keycloak_register') }}">
     <label for="first_name">First name:</label>
-    <input type="text" name="first_name" value="{{ first_name }}" />
+    <input type="text" name="first_name" value="{{ first_name }}" minlength="3" />
 
     <label for="last_name">Last name:</label>
-    <input type="text" name="last_name" value="{{ last_name }}" />
+    <input type="text" name="last_name" value="{{ last_name }}" minlength="3"/>
 
     <label for="username">Username:</label>
-    <input type="text" name="username" value="{{ username }}" />
+    <input type="text" name="username" value="{{ username }}" minlength="3"/>
 
     <label for="email">Email:</label>
-    <input type="text" name="email" value="{{ email }}" />
+    <input type="text" name="email" value="{{ email }}" minlength="3"/>
 
     <label for="password">Password:</label>
-    <input type="password" name="password" />
+    <input type="password" name="password" minlength="8"/>
 
     <label for="password_again">Password (just to be sure):</label>
-    <input type="password" name="password_again" />
+    <input type="password" name="password_again" minlength="8"/>
 
     <input type="hidden" name="invited_by" value="{{ invited_by }}"/>
 
