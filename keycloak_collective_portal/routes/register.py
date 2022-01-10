@@ -80,7 +80,7 @@ def form_keycloak_register(
         )
 
     if password != password_again:
-        context["exception"] = ("passwords don't match?",)
+        context["exception"] = "passwords don't match?"
         return request.app.state.templates.TemplateResponse(
             "register.html", context=context
         )
