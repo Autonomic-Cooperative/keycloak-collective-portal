@@ -44,7 +44,7 @@ async def register_invite(
             "invalid.html", context=context
         )
 
-    context = {"request": request, "username": username}
+    context = {"request": request, "invited_by": username}
     return request.app.state.templates.TemplateResponse(
         "register.html", context=context
     )
@@ -58,8 +58,23 @@ def form_keycloak_register(
     username: str = Form(...),
     email: str = Form(...),
     password: str = Form(...),
+    password_again: str = Form(...),
     invited_by: str = Form(...),
 ):
+
+    if password != password_again:
+        context = {
+            "request": request,
+            "exception": "passwords don't match?",
+            "invited_by": invited_by,
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+        }
+        return request.app.state.templates.TemplateResponse(
+            "register.html", context=context
+        )
 
     payload = {
         "email": email,
@@ -76,7 +91,7 @@ def form_keycloak_register(
         "realmRoles": [
             "user_default",
         ],
-        "attributes": {"invited_by": username},
+        "attributes": {"invited_by": invited_by},
     }
 
     try:

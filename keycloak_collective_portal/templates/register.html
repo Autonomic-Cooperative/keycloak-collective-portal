@@ -1,26 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
   <p>
-    You've been invited by {{ username }} 🎉
+    You've been invited by {{ invited_by }} 🎉
   </p>
+
+  {% if exception %}
+  <p>Oops, something went wrong: {{ exception }} 😬</p>
+  {% endif %}
 
   <form method="post" action="{{ url_for('form_keycloak_register') }}">
     <label for="first_name">First name:</label>
-    <input type="text" name="first_name" />
+    <input type="text" name="first_name" value="{{ first_name }}" />
 
     <label for="last_name">Last name:</label>
-    <input type="text" name="last_name" />
+    <input type="text" name="last_name" value="{{ last_name }}" />
 
     <label for="username">Username:</label>
-    <input type="text" name="username" />
+    <input type="text" name="username" value="{{ username }}" />
 
     <label for="email">Email:</label>
-    <input type="text" name="email" />
+    <input type="text" name="email" value="{{ email }}" />
 
     <label for="password">Password:</label>
     <input type="password" name="password" />
 
-    <input type="hidden" name="invited_by" value="{{ username }}"/>
+    <label for="password_again">Password (just to be sure):</label>
+    <input type="password" name="password_again" />
+
+    <input type="hidden" name="invited_by" value="{{ invited_by }}"/>
 
     <input type="submit" value="Register" />
   </form>
