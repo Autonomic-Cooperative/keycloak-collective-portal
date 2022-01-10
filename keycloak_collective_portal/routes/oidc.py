@@ -11,6 +11,11 @@ router = APIRouter()
 
 @router.get("/login")
 async def login(request: Request):
+    from keycloak_collective_portal.config import AUTOMATICALLY_LOG_IN
+
+    if AUTOMATICALLY_LOG_IN:
+        return RedirectResponse(request.url_for("login_keycloak"))
+
     return request.app.state.templates.TemplateResponse(
         "login.html", context={"request": request}
     )

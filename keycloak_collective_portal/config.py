@@ -38,3 +38,6 @@ elif LOG_LEVEL == "debug":
     APP_LOG_LEVEL = logging.DEBUG
 else:
     APP_LOG_LEVEL = logging.INFO
+
+# Automatically log folks in or show the default log in page?
+AUTOMATICALLY_LOG_IN = environ.get("AUTOMATICALLY_LOG_IN", False)
