@@ -58,7 +58,9 @@ def form_keycloak_register(
     username: str = Form(...),
     email: str = Form(...),
     password: str = Form(...),
+    invited_by: str = Form(...),
 ):
+
     payload = {
         "email": email,
         "username": username,
@@ -74,6 +76,7 @@ def form_keycloak_register(
         "realmRoles": [
             "user_default",
         ],
+        "attributes": {"invited_by": username},
     }
 
     try:
