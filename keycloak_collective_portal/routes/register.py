@@ -5,6 +5,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, Form, Request
+from pydantic import EmailStr, errors
 
 from keycloak_collective_portal.dependencies import fresh_token, get_invites
 
@@ -61,17 +62,25 @@ def form_keycloak_register(
     password_again: str = Form(...),
     invited_by: str = Form(...),
 ):
+    context = {
+        "request": request,
+        "invited_by": invited_by,
+        "first_name": first_name,
+        "last_name": last_name,
+        "username": username,
+        "email": email,
+    }
+
+    try:
+        EmailStr().validate(email)
+    except errors.EmailError:
+        context["exception"] = "email is not valid?"
+        return request.app.state.templates.TemplateResponse(
+            "register.html", context=context
+        )
 
     if password != password_again:
-        context = {
-            "request": request,
-            "exception": "passwords don't match?",
-            "invited_by": invited_by,
-            "first_name": first_name,
-            "last_name": last_name,
-            "username": username,
-            "email": email,
-        }
+        context["exception"] = ("passwords don't match?",)
         return request.app.state.templates.TemplateResponse(
             "register.html", context=context
         )
