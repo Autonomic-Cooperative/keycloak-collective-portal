@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <p>
-    You've been invited by {{ username }} to register an account!
+    You've been invited by {{ username }} 🎉
   </p>
 
   <form method="post" action="{{ url_for('form_keycloak_register') }}">
@@ -22,7 +22,7 @@
 
     <input type="hidden" name="invited_by" value="{{ username }}"/>
 
-    <input type="submit" />
+    <input type="submit" value="Register" />
   </form>
 
 {% endblock %}
